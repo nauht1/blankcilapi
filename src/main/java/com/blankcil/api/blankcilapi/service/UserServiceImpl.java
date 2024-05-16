@@ -162,10 +162,17 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public SearchModel findByKeywords(String keyword) {
+        //Tìm kiếm người dùng và podcasts dựa vào keyword
         List<UserEntity> userEntities = userRepository.findByFullnameIgnoreCaseContaining(keyword);
         List<PodcastEntity> podcastEntities = podcastRepository.findByTitleIgnoreCaseContainingOrContentIgnoreCaseContaining(keyword, keyword);
-        List<UserModel> userModels = userEntities.stream().map(userEntity -> modelMapper.map(userEntity,UserModel.class)).toList();
-        List<PodcastModel> podcastModels = podcastEntities.stream().map(podcastEntity -> modelMapper.map(podcastEntity,PodcastModel.class)).toList();
+
+        //Map từ UserEntity sang UserModel
+        List<UserModel> userModels = userEntities.stream()
+                .map(userEntity -> modelMapper.map(userEntity,UserModel.class)).toList();
+        List<PodcastModel> podcastModels = podcastEntities.stream()
+                .map(podcastEntity -> modelMapper.map(podcastEntity,PodcastModel.class)).toList();
+
+        //Trả về kết quả tìm kiếm
         return new SearchModel(userModels, podcastModels);
     }
 
