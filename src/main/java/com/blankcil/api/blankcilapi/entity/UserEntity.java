@@ -35,6 +35,7 @@ public class UserEntity implements UserDetails {
   private String phone;
   private String code;
   private LocalDateTime createDay;
+  private boolean isActive;
 
 
   @Enumerated(EnumType.STRING)
@@ -87,6 +88,6 @@ public class UserEntity implements UserDetails {
 
   @Override
   public boolean isEnabled() {
-    return true;
+    return isActive;
   }
 }

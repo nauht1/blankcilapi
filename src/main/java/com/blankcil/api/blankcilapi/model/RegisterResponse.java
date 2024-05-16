@@ -1,16 +1,15 @@
 package com.blankcil.api.blankcilapi.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PageResponse<T> {
-    private List<T> content;
-    private int currentPage;
-    private int totalPage;
+public class RegisterResponse {
+    private String fullname;
+    private String email;
 }

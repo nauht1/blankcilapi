@@ -1,9 +1,7 @@
 package com.blankcil.api.blankcilapi.controller;
 
-import com.blankcil.api.blankcilapi.model.AuthenticationRequest;
-import com.blankcil.api.blankcilapi.model.AuthenticationResponse;
+import com.blankcil.api.blankcilapi.model.*;
 import com.blankcil.api.blankcilapi.service.AuthenticationService;
-import com.blankcil.api.blankcilapi.model.RegisterRequest;
 import com.blankcil.api.blankcilapi.user.Role;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,23 +22,27 @@ public class AuthenticationController {
   private final AuthenticationService service;
 
   @PostMapping("/register")
-  public ResponseEntity<AuthenticationResponse> register(
-      @RequestBody RegisterRequest request
+  public ResponseEntity<RegisterResponse> register(
+          @RequestBody RegisterRequest request
   ) {
     request.setRole(Role.USER);
     return ResponseEntity.ok(service.register(request));
   }
+  @PostMapping("/confirm-email")
+  public ResponseEntity<AuthenticationResponse> confirm(@RequestBody ConfirmRequest confirmRequest) throws Exception {
+    return ResponseEntity.ok(service.confirmRegister(confirmRequest));
+  }
   @PostMapping("/authenticate")
   public ResponseEntity<AuthenticationResponse> authenticate(
-      @RequestBody AuthenticationRequest request
+          @RequestBody AuthenticationRequest request
   ) {
     return ResponseEntity.ok(service.authenticate(request));
   }
 
   @PostMapping("/refresh-token")
   public void refreshToken(
-      HttpServletRequest request,
-      HttpServletResponse response
+          HttpServletRequest request,
+          HttpServletResponse response
   ) throws IOException {
     service.refreshToken(request, response);
   }
